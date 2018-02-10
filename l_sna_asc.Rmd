@@ -1,0 +1,69 @@
+---
+title: "R Notebook"
+output: html_notebook
+    code_folding: show
+    fig_caption: yes
+    highlight: textmate
+    theme: spacelab
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+# Lognitudinal Social Network Analysis
+
+The goal of this workshop is to introduce you to longitudinal social network analysis. 
+
+## Learning Goals
+* Describe the different models for longitudinal SNA.
+* Explain the different assumptions between SAOM, TERGM, and REM.
+* Run a stochastic actor oriented model (SOAM)
+* Run a relational event model. 
+
+# Analytical Models
+
+## Stochastic Actor-oriented Model (SAOM)
+The **stochastic actor-oriented model** was developed by [Tom Snijders and colleagues](https://www.stats.ox.ac.uk/~snijders/siena/). Its purpose is to represent network dynamics based on observed longitudinal data, and to draw conclusions about the anlayzed populations based on the model. Variants of SAOM for multiplex data (co-evolution of edges) and for modeling networks collected in different groups (e.g., different classrooms) exists. The following assumptions hold for SAOM models:
+
+* Time *t* is continuous. While the parameter estimation assumes that data is observed at two or more discrete points in time (*network panel wave*), the model assumes that between the observed data collection periods, unobserved mini-steps are happening. This allows for expalining how three people who at time 0 were not connected, suddently, at time 1 form a closed trianlge. This closed triangle did not appear out of nowhere but is the result of three mini steps which happened while you were not observing your participants. 
+* The observed network is the consequences of previous networks. This means that all information that is contained in an earlier network (t-1) determine the probability with which ties are present/absent at the next stage (t). Factors that occured even further back in time (e.g. t-2) have no impact on the network at time t. This is called a *Markov process*.
+* The person sending the tie (*ego*, denoted as *i*) decides if he/she wants to be connected to another person (*alter*, denoted as *j*). This excludes any relationships that are based on negotiations. Network formation is thus *actor-based*.
+* At any moment in time, only one outgoing tie can change. Hence, *ties change one by one*. This makes the network easier to model. 
+* The rate at which ties changes depends on an actor's and her/his alters network position and covariates.
+* It is assumed that all actors have the same propensity to change their ties. In other words they have the same objective function. Heterogeniety is added to the model by including netowrk effects and covariates. However, the underlying assumption is that actors only evaluates the impact of their decision on their network position, and do not consider subsequent decisions by other actors. Hence, actors do not evaluate the responses from other actors.  
+
+## Temporal Exponential Random Graph Model (TERGM)
+The **temporal exponential random graph model** was devleoped by [XXX](URL LINK) and is an extension to the simple exponential random graph model (ERGM). In simple terms, ERGM is a logistic regression that calculates the probability that an edge is present or absent based on the network structure and covariates. TERGM is an extension of ERGM. 
+
+TERGM and SAOM are pretty similar. Below a description of their differences to aid when one method is more appropriate than the other:
+* In contrast to SAOM, TERMG does not make any assumptions about the agency of actors. While the mathematics behind the model make no claim about actor agency, the way in which the model is created has an actor-centric flavor. 
+* TERGM does not consider the mini-steps that might occur between *t* and *t+1*. It accepts that edges which did not exist at *t* but exists at *t+1* mmight have occured sequentially or simulatenously. 
+* SAOM purposefully models the change in networks between time periods. TERGM focuses on modeling the network. The temporal dimension is included by adding a *memory* term in the equation as a control variable. This memory term references the previously observed network. 
+
+While from a theoretical perspective, SAOM outperforms TERGM, testing of the two models using real data showed that TERGM more accurately predicted edges. 
+
+ variants for “multiplex”, “multi-relational”, or “multi-level” ERGMs as well (Wang et al. 2013), but they have not yet been extended to the temporal case.
+
+## Relational Event Model (REM)
+The **relational event model** was developed by [Carter T Butts and colleagues](LINK TO URL). It focuses on behavioral interactions, which are defined as *discrete events* directed at a person or a group of people. It assumes that past interactions create the context for future interactions. This means that every action that occurs depends on the action which occured right before it. The following assumptions apply:
+* At each time point *t* only one event can occur.
+* A current event *t* is not influenced by the realization of future events *t+1* (reverse causality).
+* A current event *t* is not influenced by the non-occurence of an event that could have appened at *t-1*. 
+The consequence of these assumptions is that REM is less suited for situations in which inividuals have a strategic orientation, are able to engage in forward-looking behavior, or have time for observation and reflection.  
+
+
+# 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
